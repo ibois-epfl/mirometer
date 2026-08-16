@@ -1,4 +1,6 @@
 import stag
+import cv2
+
 import enum
 
 class TagType(enum.Enum):
@@ -15,6 +17,15 @@ def detect_tags(image_path, tag_size=20, tag_type=TagType.STAG):
         image_path (str): Path to the input image.
 
     Returns:
-        list: A list of detected tags.
+        corners (list): List of corners of detected tags.
+        ids (list): List of IDs of detected tags.
+        rejected_corners (list): List of rejected corners.
     """
-    print(f"Detecting {tag_type.value} tags in image: {image_path} with tag size: {tag_size}")
+
+    if tag_type == TagType.STAG:
+        image = cv2.imread(image_path)
+        libraryHD = 11
+        if image is None:
+            raise ValueError(f"Image at path {image_path} could not be loaded.")
+        corners, ids, rejected_corners = stag.detectMarkers(image, libraryHD)
+        return corners, ids, rejected_corners
