@@ -30,7 +30,7 @@ def correct_full_image_using_tag(image_path, corners_per_tag, tag_size_mm=20, sp
         tag_corners = corners_per_tag[i][0]
         if tag_corners.shape != (4, 2):
             raise ValueError("Corners must be a 4x2 array of (x,y) points.")
-        top_left, top_right, bottom_right, bottom_left = sort_corners(tag_corners)
+        top_left, top_right, bottom_right, bottom_left = tag_corners[0], tag_corners[1], tag_corners[2], tag_corners[3]
         if i == 0:
             overall_top_left = top_left
             overall_bottom_left = bottom_left
@@ -81,24 +81,3 @@ def correct_full_image_using_tag(image_path, corners_per_tag, tag_size_mm=20, sp
     )
 
     return corrected_image, output_ppmm
-
-def sort_corners(corners):
-    """
-    Sorts 4 corners to [top-left, top-right, bottom-right, bottom-left] order.
-    Args:
-        corners (np.array): 4x2 array of corner points in image coordinates.
-
-    Returns:
-        sorted_corners (np.array): 4x2 array of corners sorted as [top-left, top-right, bottom-right, bottom-left].
-    """
-    centroid = np.mean(corners, axis=0)
-
-    angles = np.arctan2(corners[:, 1] - centroid[1], corners[:, 0] - centroid[0])
-    sorted_indices = np.argsort(angles)
-
-    sorted_corners = corners[sorted_indices]
-
-    if sorted_corners[0, 1] > sorted_corners[1, 1]:
-        sorted_corners = np.roll(sorted_corners, 1, axis=0)
-
-    return sorted_corners
