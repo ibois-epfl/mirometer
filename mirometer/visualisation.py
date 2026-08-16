@@ -68,7 +68,7 @@ def plot_evaluation(area_ratios):
     ax1.tick_params(axis='y', labelcolor='g')
     ax1.grid(True)
 
-    ax1.text(0.95, 0.95, f'Mean: {mean:.4f}\nStd Dev: {std:.4f}',
+    ax1.text(0.95, 0.95, f'Mean: {mean:.4f}\nStd Dev: {std:.4f}\nCount: {len(area_ratios)}',
             horizontalalignment='right', verticalalignment='top',
             transform=ax1.transAxes, bbox=dict(facecolor='white', alpha=0.5))
 
@@ -86,6 +86,5 @@ def plot_evaluation(area_ratios):
         label=f'Normal (μ={mean:.4f}, σ={std:.4f})'
     )
     ax1.axvline(x=1.00, color='r', linestyle='--', lw=1.5, zorder=11, label='Theoretical Area Ratio = 1.00')
-    plt.savefig("evaluation_results/area_ratio_distribution.png")
     
-    plt.savefig("evaluation_results/area_ratio_distribution.png")
+    plt.savefig("evaluation_results/area_ratio_distribution.png", dpi=500, bbox_inches='tight')
