@@ -27,8 +27,8 @@ def detect_colour_patch(image, target_colour, hue_tolerance=10, sat_tolerance=40
     lower_hue = max(h - hue_tolerance, 0)
     upper_hue = min(h + hue_tolerance, 180)
 
-    lower_bound = np.array([lower_hue, max(s - sat_tolerance, 0), max(v - val_tolerance, 0)])
-    upper_bound = np.array([upper_hue, min(s + sat_tolerance, 255), min(v + val_tolerance, 255)])
+    lower_bound = np.array([lower_hue, max(s - sat_tolerance, 0), max(int(v) - val_tolerance, 0)])
+    upper_bound = np.array([upper_hue, min(s + sat_tolerance, 255), min(int(v) + val_tolerance, 255)])
 
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
