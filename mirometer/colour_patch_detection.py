@@ -46,16 +46,16 @@ def draw_contour(image, mask):
         mask (numpy.ndarray): Binary mask of the detected colour patch.
     
     Returns:
-        result_image (numpy.ndarray): Image with contours drawn on it.
+        result_image (numpy.ndarray): Image with contour drawn on it.
+        area_contour (numpy.ndarray): The largest contour detected.
+
     """
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    print(f"Number of contours found: {len(contours)}")
-    contour_areas = [cv2.contourArea(c) for c in contours]
-    print(f"Contour areas: {contour_areas}")
+    sorted_contours = sorted(contours, key=cv2.contourArea, reverse=True)
 
-    result_image = cv2.drawContours(image.copy(), contours, -1, (0, 255, 0), 3)
+    result_image = cv2.drawContours(image.copy(), sorted_contours[0], -1, (0, 255, 0), 3)
 
-    return result_image
+    return result_image, cv2.contourArea(sorted_contours[0])
 
 
 def draw_mask_on_image(image, mask):
