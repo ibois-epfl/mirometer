@@ -29,7 +29,7 @@ def add_text_on_mask(image, mask, text):
     cY = int(M["m01"] / M["m00"])
 
     result_image = image.copy()
-    cv2.putText(result_image, text, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 0, 0), 2)
+    cv2.putText(result_image, text, (cX, cY + 300), cv2.FONT_HERSHEY_SIMPLEX, 2.5, (255, 0, 0), 2)
 
     return result_image
 
