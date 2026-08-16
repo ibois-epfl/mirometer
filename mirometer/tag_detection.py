@@ -27,5 +27,9 @@ def detect_tags(image_path, tag_size=20, tag_type=TagType.STAG):
         libraryHD = 11
         if image is None:
             raise ValueError(f"Image at path {image_path} could not be loaded.")
-        corners, ids, rejected_corners = stag.detectMarkers(image, libraryHD)
-        return corners, ids, rejected_corners
+        corners_per_tag, ids, rejected_corners = stag.detectMarkers(image, libraryHD)
+        ids_and_corners = list(zip(ids.flatten(), corners_per_tag))
+        ids_and_corners.sort(key=lambda x: x[0])
+        sorted_corners_per_tag = [corners for _, corners in ids_and_corners]
+        stag.drawDetectedMarkers(image, corners_per_tag, ids)
+        return sorted_corners_per_tag, ids, rejected_corners
