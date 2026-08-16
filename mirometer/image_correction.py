@@ -23,7 +23,6 @@ def correct_full_image_using_tag(image_path, corners_per_tag, tag_size_mm=20, sp
     h, w = image.shape[:2]
     
     n_tags = len(corners_per_tag)
-    print(n_tags)
     overall_top_left, overall_top_right, overall_bottom_right, overall_bottom_left = None, None, None, None
 
     for i in range(len(corners_per_tag)):
