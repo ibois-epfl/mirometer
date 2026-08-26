@@ -33,7 +33,7 @@ def correct_full_image_using_tag(image_path, corners_per_tag, tag_size_mm=20, sp
         if i == 0:
             overall_top_left = top_left
             overall_bottom_left = bottom_left
-        elif i == len(corners_per_tag) - 1:
+        if i == len(corners_per_tag) - 1:
             overall_top_right = top_right
             overall_bottom_right = bottom_right
 
