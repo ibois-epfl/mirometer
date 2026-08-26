@@ -219,3 +219,6 @@ __marimo__/
 
 # Astral
 *.lock
+
+# Our own results folder
+results/
