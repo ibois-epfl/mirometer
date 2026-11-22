@@ -10,7 +10,7 @@ def get_image_paths(path):
     import glob
     valid_extensions = {'.png', '.jpg', '.jpeg', '.bmp', '.JPG', '.PNG', '.JPEG', '.BMP'}
 
-    # Check if it's a directory FIRST
+    # Check if it's a directory
     if os.path.isdir(path):
         return [
             str(f) for f in Path(path).iterdir()
@@ -33,9 +33,13 @@ def main(target_colour, input_path, tag_size, space_between_tags, hue_tolerance,
     print(f"Found {len(image_paths)} image(s) at {input_path}")
     results_dic = {}
     for image_path in image_paths:
+        print(f"processing image {image_path}")
         corners_per_tag, ids, rejected_corners = mirometer.tag_detection.detect_tags(
             image_path, tag_size=tag_size, tag_type=mirometer.tag_detection.TagType.STAG)
         ppm = 10
+        if len(corners_per_tag) == 0:
+            print(f"No tags detected in image {image_path}")
+            continue
         corrected_image, scale = mirometer.image_correction.correct_full_image_using_tag(
             image_path,
             corners_per_tag,
